@@ -21,6 +21,7 @@ public class InsertingImageToDatabase {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String name = rs.getString("tag");
+//                System.out.println(name);
 
                 File image = new File(name);
                 try (FileOutputStream fos = new FileOutputStream(image)) {
@@ -28,6 +29,7 @@ public class InsertingImageToDatabase {
 
                     // Get the binary stream of our BLOB data
                     InputStream is = rs.getBinaryStream("img");
+                    System.out.println(is);
                     while (is.read(buffer) > 0) {
                         fos.write(buffer);
                     }
