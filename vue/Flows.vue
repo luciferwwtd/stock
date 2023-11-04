@@ -13,7 +13,7 @@
           <div class="card-body px-0 pb-2">
             <div class="button">
               <div class="mx-3">
-                <button @click="initLoad()">클릭</button>
+                <button @click="messageSplit()">클릭</button>
               </div>
             </div>
             <input type="text" id="corePoolSize" v-model ="words"/>
@@ -53,16 +53,20 @@ export default {
     };
   },
   mounted() {
-    // this.initLoad();
+    this.initLoad();
   },
   methods: {
+    messageSplit() {
+      console.log(this.threadPool);
+    },
     initLoad() {
-    	axios.get('/api/hello/')
+    	axios.get('/api/hello')
         .then(response => (response.data))
         .then(result => {
           // JSON responses are automatically parsed.
           this.threadPool = result;
-          console.log(typeof this.threadPool); 
+          console.log(typeof this.threadPool);
+          console.log(this.threadPool);
         })
         .catch(e => {
           this.errors.push(e)
