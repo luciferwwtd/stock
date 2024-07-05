@@ -1,6 +1,6 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <input v-model="city" placeholder="이걸 본 너는 바보가 된다">
+  <input v-model="city" placeholder="지역 이름">
   <button @click="initLoad()">조회하기</button>
 
   <b-table striped hover :items="items"></b-table>
@@ -45,14 +45,14 @@ export default {
   },
   methods: {
     travelLoad() {
-        axios.get('/api/travel/'+this.place)
+        axios.get('/api/travel/'+this.city)
         .then(response => (response.data))
         .then(result => {
             this.threadPool = result;
 
             for (var i = 0, i < this.threadPool.length, i++) {
-                this.travDic["이름"] = this.threadPool[i][1];
-                this.travDic["관광지 설명"] = this.threadPool[i][2];
+                this.travDic["관광지 이름"] = this.threadPool[i][1];
+                this.travDic["설명"] = this.threadPool[i][2];
             }
         })
         .catch(e => {
