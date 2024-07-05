@@ -1,62 +1,103 @@
-package kr.co.swh.lecture.springboot;
-// https://file.swhcoding.com/
+<template>
+  <img alt="Vue logo" src="./assets/logo.png">
+  <input v-model="city" placeholder="이걸 본 너는 바보가 된다">
+  <button @click="initLoad()">조회하기</button>
 
-import java.math.BigDecimal;
+  <b-table striped hover :items="items"></b-table>
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+</template>
 
-@Entity
-public class ExchangeValue {
+<!-- <template>
+  <div class="test">
+    <div id="demo">
+        <button @click="travelLoad()">조회하기</button>
+    </div>
+  </div>
+</template> -->
 
-    @Id
-    private Long id;
 
-    @Column(name = "currency_from")
-    private String from;
+<script>
+import axios from 'axios';
+// import Movie from './components/Movie.vue'
+// import Test from './components/Test.vue'
 
-    @Column(name = "currency_to")
-    private String to;
+export default {
+  name: 'App',
+  components: {
+    // Movie
+    // Test
+  },
+  data() {
+    return {
+      errors: [],
+      items: [],
 
-    private BigDecimal conversionMultiple;
-
-    private int port;
-
-    public ExchangeValue() {
-
+      threadPool: [],
+      city: "",
+      dic: {},
+      travDic: {},
+      travelList: [],
     }
+  },
+  mounted() {
+    this.travelLoad();
+    this.initLoad();
+  },
+  methods: {
+    travelLoad() {
+        axios.get('/api/travel/'+this.place)
+        .then(response => (response.data))
+        .then(result => {
+            this.threadPool = result;
 
-    public ExchangeValue(Long id, String from, String to, BigDecimal conversionMultiple) {
-        super();
-        this.id = id;
-        this.from = from;
-        this.to = to;
-        this.conversionMultiple = conversionMultiple;
-    }
+            for (var i = 0, i < this.threadPool.length, i++) {
+                this.travDic["이름"] = this.threadPool[i][1];
+                this.travDic["관광지 설명"] = this.threadPool[i][2];
+            }
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
+    },
+    initLoad() {
+    	axios.get('/api/city/'+this.city)
+        .then(response => (response.data))
+        .then(result => {
+          
+          // JSON responses are automatically parsed.
+          this.threadPool = result;
 
-    public Long getId() {
-        return id;
-    }
+          for (var i = 0; i < this.threadPool.length; i++) {
+            this.dic["날짜"] = this.threadPool[i][0];
+            this.dic["날씨"] = this.threadPool[i][1];
+            this.dic["최저 온도"] = this.threadPool[i][2];
+            this.dic["최고 온도"] = this.threadPool[i][3];
+            console.log(this.dic);
+            this.item.push(this.dic);
+            console.log("item : "+this.item);
+            this.dic.container = {};
 
-    public String getFrom() {
-        return from;
-    }
+            console.log("dic : "+this.dic)
+          }
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
+	  },
+    click() {
 
-    public String getTo() {
-        return to;
-    }
-
-    public BigDecimal getConversionMultiple() {
-        return conversionMultiple;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
+    } 
+  }
 }
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
