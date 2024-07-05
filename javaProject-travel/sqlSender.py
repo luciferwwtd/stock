@@ -21,9 +21,6 @@ class MyWindow(QMainWindow):
 
         self.descEdit = QLineEdit("", self)
         self.descEdit.move(20, 50)
-
-        self.descEdit = QLineEdit("", self)
-        self.descEdit.move(20, 50)
  
         button2 = QLineEdit("전송하기", self)
         button2.move(130, 50)
@@ -38,7 +35,7 @@ class MyWindow(QMainWindow):
         charset='utf8')
       try:
         with conn.cursor() as cursor:
-          sql = "INSERT INTO travel (place, name, desc, link) VALUES ('%s', '%s', '%s', '%s')" % (placeEdit.text(), nameEdit.text(), descEdit.text(), linkEdit())
+          sql = "INSERT INTO travel (place, name, desc) VALUES ('%s', '%s', '%s')" % (placeEdit.text(), nameEdit.text(), descEdit.text())
           print(sql)
           cursor.execute(sql)
         conn.commit()
