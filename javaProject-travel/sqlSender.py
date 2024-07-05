@@ -45,6 +45,13 @@ class MyWindow(QMainWindow):
         # 1 (last insert id)
       finally:
         conn.close()
+
+# 프로그램들
+
+# SpringBoot 두개 - 하나는 날씨, 하나는 관광지
+# Vue - 서버에서 axios.GET으로 SprintBoot에서 각각 정보 빼오기
+
+# pymysql - 데이터베이스로 손쉬운 정보 전달
         
 if __name__ == "__main__":
   app = QApplication(sys.argv)
