@@ -11,7 +11,20 @@ def welcome(name):
 
 @app.route('/', methods=['GET'])  # methods = ['GET', 'POST']) 로 여러 개 가능
 def login():
-    return render_template('render_template.html')
+    placeValues = []
+    conn = pymysql.connect(host='183.99.87.90',
+                           user='root',
+                           password="swhacademy!",
+                           db='SeanLee',
+                           charset='utf8')
+
+    with conn.cursor() as cursor:
+        sql = 'SELECT place FROM travel;'
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        for result in results:
+            placeValues.append(result)
+    return render_template('render_template.html', placeValuess=placeValues)
 
 
 @app.route('/submit', methods=['POST'])
@@ -21,6 +34,8 @@ def submit():
 
     weatherValues = []
     weatherResult = []
+
+    placeValues = []
     i=0
     if request.method == 'POST':
         user = request.form['place']
@@ -55,7 +70,14 @@ def submit():
                     weatherValues.append(weatherResult)
                     weatherResult = []
                     i += 1
-            return render_template('render_template.html', values=travelValues, weatherValuess=weatherValues)
+
+            with conn.cursor() as cursor:
+                sql = 'SELECT place FROM travel;'
+                cursor.execute(sql)
+                results = cursor.fetchall()
+                for result in results:
+                    placeValues.append(result)
+            return render_template('render_template.html', values=travelValues, weatherValuess=weatherValues, placeValuess=placeValues)
                 # (1, 'test@test.com', 'my-passwd')
         finally:
             conn.close()
