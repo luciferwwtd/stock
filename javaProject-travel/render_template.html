@@ -1,0 +1,50 @@
+<html>
+   <head>
+       <style>
+       table, th, td {
+            border: 1px solid black;
+        }
+        </style>
+        <title>관광지 검색 웹사이트</title>
+    </head>
+   <body>
+      <form action = "http://127.0.0.1:8080/submit" method = "post">
+         <p>관광지를 입력하시오:</p>
+         <p><input type = "text" name = "place" /></p>
+         <p><input type = "submit" value = "조회하기" /></p>
+      </form>
+      <table style="width:100%">
+          <tr>
+              <td>관광지 이름</td>
+              <td>관광지 설명</td>
+          </tr>
+          <ul>
+              {% for value in values %}
+              <tr>
+                  {% for kan in value %}
+                  <td>{{ kan }}</td>
+                  {% endfor %}
+              </tr>
+              {% endfor %}
+          </ul>
+      </table>
+
+      <table style="width:100%">
+          <tr>
+              <td>날짜</td>
+              <td>날씨</td>
+              <td>최저온도</td>
+              <td>최고온도</td>
+          </tr>
+          <ul>
+              {% for weatherValue in weatherValuess %}
+              <tr>
+                  {% for weatherKan in weatherValue %}
+                  <td>{{ weatherKan }}</td>
+                  {% endfor %}
+              </tr>
+              {% endfor %}
+          </ul>
+      </table>
+   </body>
+</html>
