@@ -46,5 +46,20 @@
               {% endfor %}
           </ul>
       </table>
+
+      <table style="width:100%">
+          <tr>
+              <td>가능한 지역들</td>
+          </tr>
+          <ul>
+              {% for placeValue in placeValuess %}
+              <tr>
+                  {% for placeKan in placeValue %}
+                  <td>{{ placeKan }}</td>
+                  {% endfor %}
+              </tr>
+              {% endfor %}
+          </ul>
+      </table>
    </body>
 </html>
